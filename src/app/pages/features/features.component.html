@@ -1,0 +1,66 @@
+<section style="margin: 24px;">
+    <h2 class="section-title">Last 30 days of earthquakes</h2>
+    <div class="container">
+      <div class="container__filters-area">
+        <h3>FILTERS</h3>
+        <div class="container__filters-area__filters">
+          <label>Type of Magnitude:</label>
+          <div style="max-width: 100%; position: relative;">
+            <p-multiSelect  
+              [options]="magTypes" 
+              [(ngModel)]="selectedMagTypes"
+              placeholder="Filter by type of magnitude" 
+              optionLabel="name" 
+              optionValue="code"
+              [showClear]="true"
+              (ngModelChange)="onMagTypeChange()"
+            >
+            </p-multiSelect>
+          </div>
+        </div>
+      </div>
+      <div class="container__list-area">
+        <div class="container__list-area__header">
+            <p-iconField iconPosition="left">
+                <p-inputIcon styleClass="pi pi-search" />
+                <input type="text" (keyup.enter)="onSearchEvent()" [(ngModel)]="search" pInputText placeholder="Search" />
+            </p-iconField>
+            <div class="container__list-area__paginator">
+                <span class="mx-1 text-color">Items per page: </span>
+                <p-dropdown [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="perPage" (ngModelChange)="onPerPageChange($event)"></p-dropdown>
+                @if(featuresList$ | async; as featuresObject){
+                  <p-paginator 
+                    [first]="0" 
+                    [rows]="perPage" 
+                    [totalRecords]="featuresObject.data.pagination.total"  
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="{first} - {last} of {totalRecords}" 
+                    [showPageLinks]="false" 
+                    [showFirstLastIcon]="false" 
+                    (onPageChange)="onPageChange($event)"
+                  >
+                  </p-paginator>
+                }
+            </div>
+        </div>
+        <div class="container__list-area__body">
+            @if(featuresList$ | async; as featuresObject){
+              @for( item of featuresObject.data.data; track item.id){
+                <app-feature-card 
+                  [title] = "item.place"
+                  [magnitude] = "item.magnitude"
+                  [longitude] = "item.longitude" 
+                  [latitude] = "item.latitude" 
+                  [time] = "item.time" 
+                  [url] = "item.url"
+                >
+                </app-feature-card>
+              }
+            }
+            @else {
+              <div class="not-available">No data available</div>
+            }
+        </div>
+      </div>
+    </div>
+</section>
