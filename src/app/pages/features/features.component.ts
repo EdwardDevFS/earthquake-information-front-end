@@ -10,8 +10,6 @@ import { PaginatorModule } from 'primeng/paginator';
 import { FeatureCardComponent } from '../../shared/components/feature-card/feature-card.component';
 import { AsyncPipe } from '@angular/common';
 import { IPagination, IResponse } from '../../core/models/features.interface';
-import { DropdownChangeEvent } from 'primeng/dropdown';
-
 
 interface PageEvent {
   first?: number;

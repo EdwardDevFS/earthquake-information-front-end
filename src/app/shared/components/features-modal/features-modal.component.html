@@ -1,1 +1,65 @@
-<p>features-modal works!</p>
+<p-dialog 
+    header="Details of Earthquake Event " 
+    [(visible)]="visible" 
+    (onShow)="onShowHandle()"
+    (onHide)="onHideHandle()"
+    [style]="{width: '50vw'}" 
+    [modal]="true"
+    [draggable]="false" 
+    [resizable]="false"
+    >
+    <section class="container">
+        <div class="feature">
+            <h2>EARTHQUAKE</h2>
+            <div class="feature__detail">
+                <p><b>Place: </b>{{feature.place}}</p>
+                <p><b>Longitude: </b>{{feature.longitude}}°N</p>
+                <p><b>Latitude: </b>{{feature.latitude}}°E</p>
+                <p><b>Registered at:</b> {{feature.time}}</p>
+                <p><b>Type of magnitude:</b> Magnitude of duration ({{feature.mag_type}})</p>
+                <p><b>Tsunami:</b> {{feature.tsunami? 'Yes': 'No'}}</p>
+
+            </div>
+            <div class="feature__footer">
+                <span class="feature__footer__magnitude">MAGNITUDE 1.5 - ML</span>
+                <a href="#" target="_blank" >
+                    <p-button label="See official page" icon="pi pi-globe" [outlined]="true" iconPos="right" size="small" [text]="true" [raised]="true" severity="info"></p-button>
+                </a>
+            </div>
+        </div>
+        <div class="feature-image">
+            <img src="https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/styles/info_block/public/thumbnails/image/latesteqs-300for150_0.gif?itok=oRVfWnav" alt="">
+        </div>
+    </section>
+    <section class="comments-container">
+        <h2>COMMENTS</h2>
+        <div class="multiple-comments-container">
+            @if(featureComments$ | async; as commentsObject){
+                @if(commentsObject.data.length){
+                    @for( item of commentsObject.data; track item.id){
+                        <div class="comment">
+                            <div class="comment__avatar">
+                                <p-avatar icon="pi pi-user" styleClass="mr-2" [style]="{'background-color':'#2196F3', 'color': '#ffffff'}" shape="circle"></p-avatar>
+                            </div>
+                            <div class="comment__body">
+                                <div class="comment__body__header">
+                                    <b>Unknown User</b> - {{ item.created_at | dateFormat}}
+                                </div>
+                                <div class="comment__body__description">
+                                    {{item.description}}
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                @else {
+                    <b style="text-align: center;">No comments founded for this feature</b>
+                }
+            }
+        </div>
+        <div class="send-comment">
+            <textarea style="width: 100%; min-height: 80px; max-height: 100px;" placeholder="Write your comment here." pInputTextarea [autoResize]="true"></textarea>
+            <p-button icon="pi pi-send" [outlined]="true"></p-button>
+        </div>
+    </section>
+</p-dialog>

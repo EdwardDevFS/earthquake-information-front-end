@@ -47,12 +47,7 @@
             @if(featuresList$ | async; as featuresObject){
               @for( item of featuresObject.data.data; track item.id){
                 <app-feature-card 
-                  [title] = "item.place"
-                  [magnitude] = "item.magnitude"
-                  [longitude] = "item.longitude" 
-                  [latitude] = "item.latitude" 
-                  [time] = "item.time" 
-                  [url] = "item.url"
+                  [feature] = "item"
                 >
                 </app-feature-card>
               }
