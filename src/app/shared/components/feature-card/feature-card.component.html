@@ -5,7 +5,7 @@
             <p class="card__body__header__magnitude">M. {{ feature.magnitude }}</p>
         </div>
         <div class="card__body__detail">
-            <p class="card__body__detail__geolocation">{{feature.longitude}}°N {{ feature.latitude }}°E</p>
+            <p class="card__body__detail__geolocation">{{ feature.longitude | transformCoordinates: true}} - {{ feature.latitude | transformCoordinates: false}}</p>
             <p class="card__body__detail__date_formatted">{{ feature.created_at | dateFormat }}</p>
         </div>
         <div class="card__body__footer">

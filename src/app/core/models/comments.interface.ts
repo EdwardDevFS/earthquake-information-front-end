@@ -1,5 +1,5 @@
 export interface ICommentsResponse{
-    data: IComments[],
+    data: IComments[] | [],
     message: string
 }
 

@@ -15,9 +15,25 @@ export class CommentsService {
 
   getComments(feature_id: number): Observable<ICommentsResponse>{
 
-    let api_backend = this.API + feature_id + '/comments'
+    let apiEndpoint = this.API + feature_id + '/comments'
 
-    return this.http.get<ICommentsResponse>(api_backend)
+    return this.http.get<ICommentsResponse>(apiEndpoint)
+  }
+
+  saveComment(feature_id: number, comment: string): Promise<any> {
+    const apiEndpoint = `${this.API}/comments/save`;
+    const payload = { comment: comment, feature_id: feature_id };
+
+    return new Promise((resolve, reject) => {
+      this.http.post(apiEndpoint, payload).subscribe(
+        response => {
+          resolve(response); // Resolvemos la promesa con la respuesta del backend
+        },
+        error => {
+          reject(error); // Rechazamos la promesa con el error
+        }
+      );
+    });
   }
 
 }
