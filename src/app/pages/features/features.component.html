@@ -30,7 +30,7 @@
                 <p-dropdown [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="perPage" (ngModelChange)="onPerPageChange($event)"></p-dropdown>
                 @if(featuresList$ | async; as featuresObject){
                   <p-paginator 
-                    [first]="0" 
+                    [first]="first" 
                     [rows]="perPage" 
                     [totalRecords]="featuresObject.data.pagination.total"  
                     [showCurrentPageReport]="true"

@@ -9,19 +9,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { FeatureCardComponent } from '../../shared/components/feature-card/feature-card.component';
 import { AsyncPipe } from '@angular/common';
-import { IPagination, IResponse } from '../../core/models/features.interface';
+import { IPagination, IResponse, IMagTypes } from '../../core/models/features.interface';
 
-interface PageEvent {
-  first?: number;
-  rows?: number;
-  page?: number;
-  pageCount?: number;
-}
-
-interface IMagTypes{
-  name: string;
-  code: string;
-}
 
 @Component({
   selector: 'app-features',
@@ -50,6 +39,7 @@ export class FeaturesComponent implements OnInit, OnDestroy {
   selectedMagTypes: string[]= []; 
   
   page?: number = 0;
+  first: number = 0;
   perPage?: number = 10;
   totalRecords: number = 120;
 
@@ -82,9 +72,10 @@ export class FeaturesComponent implements OnInit, OnDestroy {
     this.featuresList$ = this.service.getFeatures(this.page, this.perPage, this.selectedMagTypes, this.search);
   }
 
-  onPageChange(event: PageEvent): void
+  onPageChange(event: any): void
   {
     this.page = event.page;
+    this.first = event.first;
     this.perPage = event.rows;
     this.getFeatures();
   }
@@ -93,6 +84,7 @@ export class FeaturesComponent implements OnInit, OnDestroy {
   {
     this.page = 0
     this.perPage = event
+
     this.getFeatures();
   }
 

@@ -37,3 +37,8 @@ export interface ILinks{
     external_url: string
 }
 
+export interface IMagTypes{
+    name: string;
+    code: string;
+}
+  
